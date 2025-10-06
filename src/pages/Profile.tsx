@@ -1,519 +1,221 @@
-import React, { useState } from 'react';
-import { User, Phone, MapPin, Building2, Copy, Share2, CreditCard, Check, CreditCard as Edit2, X } from 'lucide-react';
+import React, { useState } from "react";
+import { FaEdit, FaCopy, FaShareAlt } from "react-icons/fa";
 
-interface PersonalInfo {
-  fullName: string;
-  buildingOrHouseName: string;
-  area: string;
-  subArea: string;
-  city: string;
-  state: string;
-  pincode: string;
-  mobileNumber: string;
-}
-
-interface BankInfo {
-  bankName: string;
-  accountHolderName: string;
-  accountNumber: string;
-  ifscCode: string;
-  bankBranch: string;
-  folderName: string;
-}
-
-interface ToastMessage {
-  show: boolean;
-  message: string;
-  type: 'success' | 'error';
-}
-
-const Profile: React.FC = () => {
+const ProfilePage = () => {
   const [isEditingPersonal, setIsEditingPersonal] = useState(false);
   const [isEditingBank, setIsEditingBank] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [toast, setToast] = useState<ToastMessage>({ show: false, message: '', type: 'success' });
 
-  const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({
-    fullName: 'John Doe',
-    buildingOrHouseName: 'Sunshine Apartments',
-    area: 'Jubilee Hills',
-    subArea: 'Road No 45',
-    city: 'Hyderabad',
-    state: 'Telangana',
-    pincode: '500033',
-    mobileNumber: '+91 9876543210'
+  const [personalInfo, setPersonalInfo] = useState({
+    fullName: "John Doe",
+    mobileNumber: "+91 9876543210",
+    buildingName: "Sunshine Apartments",
+    area: "Jubilee Hills",
+    subArea: "Road No 45",
+    city: "Hyderabad",
+    state: "Telangana",
+    pincode: "500033",
   });
 
-  const [bankInfo, setBankInfo] = useState<BankInfo>({
-    bankName: 'HDFC Bank',
-    accountHolderName: 'John Doe',
-    accountNumber: '12345678901234',
-    ifscCode: 'HDFC0001234',
-    bankBranch: 'Jubilee Hills Branch',
-    folderName: 'Personal Account'
+  const [bankInfo, setBankInfo] = useState({
+    bankName: "HDFC Bank",
+    accountHolderName: "John Doe",
+    accountNumber: "XXXXXXXX1234",
+    ifscCode: "HDFC0001234",
+    bankBranch: "Jubilee Hills Branch",
+    folderName: "Personal Account",
   });
 
-  const referralCode = 'REF2024ABC123';
+  const referralCode = "REF2024ABC123";
 
-  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
-    setToast({ show: true, message, type });
-    setTimeout(() => {
-      setToast({ show: false, message: '', type: 'success' });
-    }, 3000);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(referralCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleCopyReferral = async () => {
-    try {
-      await navigator.clipboard.writeText(referralCode);
-      setCopied(true);
-      showToast('Referral code copied!');
-      setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      showToast('Failed to copy referral code', 'error');
-    }
-  };
-
-  const handleShareReferral = async () => {
+  const handleShare = () => {
+    const shareText = `Use my referral code ${referralCode} to join!`;
     if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Join with my referral code',
-          text: `Use my referral code: ${referralCode}`,
-        });
-        showToast('Shared successfully!');
-      } catch (error) {
-        if ((error as Error).name !== 'AbortError') {
-          showToast('Failed to share referral code', 'error');
-        }
-      }
+      navigator.share({
+        title: "Referral Code",
+        text: shareText,
+      });
     } else {
-      handleCopyReferral();
+      alert("Share feature not supported on this browser");
     }
-  };
-
-  const handleSavePersonalInfo = () => {
-    // Validation
-    if (!personalInfo.fullName.trim()) {
-      showToast('Please enter your full name', 'error');
-      return;
-    }
-    if (!personalInfo.pincode.match(/^\d{6}$/)) {
-      showToast('Please enter a valid 6-digit pincode', 'error');
-      return;
-    }
-
-    setIsEditingPersonal(false);
-    showToast('Personal information updated successfully!');
-  };
-
-  const handleSaveBankInfo = () => {
-    // Validation
-    if (!bankInfo.bankName.trim()) {
-      showToast('Please enter bank name', 'error');
-      return;
-    }
-    if (!bankInfo.accountNumber.match(/^\d{9,18}$/)) {
-      showToast('Please enter a valid account number', 'error');
-      return;
-    }
-    if (!bankInfo.ifscCode.match(/^[A-Z]{4}0[A-Z0-9]{6}$/)) {
-      showToast('Please enter a valid IFSC code', 'error');
-      return;
-    }
-
-    setIsEditingBank(false);
-    showToast('Bank information updated successfully!');
-  };
-
-  const maskAccountNumber = (accountNumber: string): string => {
-    if (accountNumber.length <= 4) return accountNumber;
-    return 'X'.repeat(accountNumber.length - 4) + accountNumber.slice(-4);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-5xl mx-auto p-6 md:p-8">
-        {/* Toast Notification */}
-        {toast.show && (
-          <div className={`fixed top-6 right-6 z-50 px-6 py-4 rounded-xl shadow-lg flex items-center space-x-3 animate-slide-in ${
-            toast.type === 'success' ? 'bg-green-600' : 'bg-red-600'
-          } text-white`}>
-            <Check size={20} />
-            <span className="font-medium">{toast.message}</span>
-          </div>
-        )}
+    <div className="min-h-screen bg-gray-50 md:ml-64 p-4 md:p-8">
+      <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+        {/* ---------- Header ---------- */}
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+          Profile Management
+        </h2>
+        <p className="text-gray-500 mb-10">
+          Manage your personal information and account settings
+        </p>
 
-        {/* Header Section */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Profile Management</h1>
-          <p className="text-gray-600">Manage your personal information and account settings</p>
-        </div>
-
-        {/* Personal Information Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 flex items-center space-x-2">
-              <User className="w-6 h-6 text-blue-600" />
-              <span>Personal Information</span>
-            </h2>
-            {!isEditingPersonal ? (
-              <button
-                onClick={() => setIsEditingPersonal(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl flex items-center space-x-2 transition-all shadow-sm"
-              >
-                <Edit2 size={18} />
-                <span className="font-medium">Edit</span>
-              </button>
-            ) : (
-              <button
-                onClick={() => setIsEditingPersonal(false)}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2.5 rounded-xl flex items-center space-x-2 transition-all"
-              >
-                <X size={18} />
-                <span className="font-medium">Cancel</span>
-              </button>
-            )}
+        {/* ---------- Personal Information ---------- */}
+        <div className="border border-gray-200 rounded-xl p-6 mb-8 shadow-sm">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-gray-700">
+              Personal Information
+            </h3>
+            <button
+              onClick={() => setIsEditingPersonal(!isEditingPersonal)}
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+            >
+              <FaEdit /> {isEditingPersonal ? "Save" : "Edit"}
+            </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Full Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-              {isEditingPersonal ? (
-                <input
-                  type="text"
-                  value={personalInfo.fullName}
-                  onChange={(e) => setPersonalInfo({ ...personalInfo, fullName: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter your full name"
-                />
-              ) : (
-                <p className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800">{personalInfo.fullName}</p>
-              )}
-            </div>
-
-            {/* Mobile Number (Read-only) */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center space-x-2">
-                <span>Mobile Number</span>
-                <span className="text-xs text-gray-500 italic">(Read-only)</span>
-              </label>
-              <div className="px-4 py-3 bg-gray-100 rounded-xl text-gray-600 flex items-center space-x-2 cursor-not-allowed">
-                <Phone size={18} className="text-gray-400" />
-                <span>{personalInfo.mobileNumber}</span>
-              </div>
-            </div>
-
-            {/* Building/House Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Building or House Name</label>
-              {isEditingPersonal ? (
-                <input
-                  type="text"
-                  value={personalInfo.buildingOrHouseName}
-                  onChange={(e) => setPersonalInfo({ ...personalInfo, buildingOrHouseName: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter building or house name"
-                />
-              ) : (
-                <p className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800">{personalInfo.buildingOrHouseName}</p>
-              )}
-            </div>
-
-            {/* Area */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Area</label>
-              {isEditingPersonal ? (
-                <input
-                  type="text"
-                  value={personalInfo.area}
-                  onChange={(e) => setPersonalInfo({ ...personalInfo, area: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter area"
-                />
-              ) : (
-                <p className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800">{personalInfo.area}</p>
-              )}
-            </div>
-
-            {/* Sub-Area */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Sub-Area</label>
-              {isEditingPersonal ? (
-                <input
-                  type="text"
-                  value={personalInfo.subArea}
-                  onChange={(e) => setPersonalInfo({ ...personalInfo, subArea: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter sub-area"
-                />
-              ) : (
-                <p className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800">{personalInfo.subArea}</p>
-              )}
-            </div>
-
-            {/* City */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
-              {isEditingPersonal ? (
-                <input
-                  type="text"
-                  value={personalInfo.city}
-                  onChange={(e) => setPersonalInfo({ ...personalInfo, city: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter city"
-                />
-              ) : (
-                <p className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800">{personalInfo.city}</p>
-              )}
-            </div>
-
-            {/* State */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
-              {isEditingPersonal ? (
-                <input
-                  type="text"
-                  value={personalInfo.state}
-                  onChange={(e) => setPersonalInfo({ ...personalInfo, state: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter state"
-                />
-              ) : (
-                <p className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800">{personalInfo.state}</p>
-              )}
-            </div>
-
-            {/* Pincode */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Pincode</label>
-              {isEditingPersonal ? (
-                <input
-                  type="text"
-                  value={personalInfo.pincode}
-                  onChange={(e) => setPersonalInfo({ ...personalInfo, pincode: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter 6-digit pincode"
-                  maxLength={6}
-                />
-              ) : (
-                <p className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800">{personalInfo.pincode}</p>
-              )}
-            </div>
+            <InputField
+              label="Full Name"
+              value={personalInfo.fullName}
+              editable={isEditingPersonal}
+            />
+            <InputField
+              label="Mobile Number (Read-only)"
+              value={personalInfo.mobileNumber}
+              editable={false}
+              icon="📞"
+            />
+            <InputField
+              label="Building or House Name"
+              value={personalInfo.buildingName}
+              editable={isEditingPersonal}
+            />
+            <InputField
+              label="Area"
+              value={personalInfo.area}
+              editable={isEditingPersonal}
+            />
+            <InputField
+              label="Sub Area"
+              value={personalInfo.subArea}
+              editable={isEditingPersonal}
+            />
+            <InputField
+              label="City"
+              value={personalInfo.city}
+              editable={isEditingPersonal}
+            />
+            <InputField
+              label="State"
+              value={personalInfo.state}
+              editable={isEditingPersonal}
+            />
+            <InputField
+              label="Pincode"
+              value={personalInfo.pincode}
+              editable={isEditingPersonal}
+            />
           </div>
-
-          {isEditingPersonal && (
-            <div className="mt-6 flex space-x-3">
-              <button
-                onClick={handleSavePersonalInfo}
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors font-medium shadow-sm"
-              >
-                Save Changes
-              </button>
-            </div>
-          )}
         </div>
 
-        {/* Referral Code Section */}
-        <div className="bg-gradient-to-br from-blue-50 to-teal-50 rounded-2xl shadow-sm border border-blue-200 p-8 mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center space-x-2">
-            <Share2 className="w-6 h-6 text-blue-600" />
-            <span>Your Referral Code</span>
-          </h2>
-          <div className="flex items-center justify-between bg-white rounded-xl p-4 border border-blue-200">
-            <div className="flex items-center space-x-3">
-              <div className="bg-blue-100 p-3 rounded-lg">
-                <Copy className="w-5 h-5 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Share this code with friends</p>
-                <p className="text-2xl font-bold text-gray-800 tracking-wider">{referralCode}</p>
-              </div>
-            </div>
-            <div className="flex space-x-3">
+        {/* ---------- Referral Code Section ---------- */}
+        <div className="border border-blue-200 bg-blue-50 rounded-xl p-6 mb-8 shadow-sm">
+          <h3 className="text-lg font-semibold text-blue-800 mb-2">
+            Your Referral Code
+          </h3>
+          <p className="text-gray-600 mb-4">
+            Share this code with your friends
+          </p>
+          <div className="flex items-center justify-between bg-white border border-gray-300 rounded-lg px-4 py-3">
+            <span className="font-semibold text-lg text-gray-800">
+              {referralCode}
+            </span>
+            <div className="flex gap-3">
               <button
-                onClick={handleCopyReferral}
-                className={`px-5 py-2.5 rounded-xl flex items-center space-x-2 transition-all font-medium shadow-sm ${
-                  copied
-                    ? 'bg-green-600 text-white'
-                    : 'bg-blue-600 hover:bg-blue-700 text-white'
-                }`}
+                onClick={handleCopy}
+                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md"
               >
-                {copied ? <Check size={18} /> : <Copy size={18} />}
-                <span>{copied ? 'Copied!' : 'Copy'}</span>
+                <FaCopy /> {copied ? "Copied" : "Copy"}
               </button>
               <button
-                onClick={handleShareReferral}
-                className="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl flex items-center space-x-2 transition-all font-medium shadow-sm"
+                onClick={handleShare}
+                className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md"
               >
-                <Share2 size={18} />
-                <span>Share</span>
+                <FaShareAlt /> Share
               </button>
             </div>
           </div>
         </div>
 
-        {/* Bank Information Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 flex items-center space-x-2">
-              <CreditCard className="w-6 h-6 text-green-600" />
-              <span>Bank Information</span>
-            </h2>
-            {!isEditingBank ? (
-              <button
-                onClick={() => setIsEditingBank(true)}
-                className="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-xl flex items-center space-x-2 transition-all shadow-sm"
-              >
-                <Edit2 size={18} />
-                <span className="font-medium">Edit</span>
-              </button>
-            ) : (
-              <button
-                onClick={() => setIsEditingBank(false)}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2.5 rounded-xl flex items-center space-x-2 transition-all"
-              >
-                <X size={18} />
-                <span className="font-medium">Cancel</span>
-              </button>
-            )}
+        {/* ---------- Bank Information ---------- */}
+        <div className="border border-gray-200 rounded-xl p-6 shadow-sm">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-gray-700">
+              Bank Information
+            </h3>
+            <button
+              onClick={() => setIsEditingBank(!isEditingBank)}
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+            >
+              <FaEdit /> {isEditingBank ? "Save" : "Edit"}
+            </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Bank Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Bank Name</label>
-              {isEditingBank ? (
-                <input
-                  type="text"
-                  value={bankInfo.bankName}
-                  onChange={(e) => setBankInfo({ ...bankInfo, bankName: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-                  placeholder="Enter official bank name"
-                />
-              ) : (
-                <p className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800">{bankInfo.bankName}</p>
-              )}
-            </div>
-
-            {/* Account Holder Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Account Holder Name</label>
-              {isEditingBank ? (
-                <input
-                  type="text"
-                  value={bankInfo.accountHolderName}
-                  onChange={(e) => setBankInfo({ ...bankInfo, accountHolderName: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-                  placeholder="Enter account holder name"
-                />
-              ) : (
-                <p className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800">{bankInfo.accountHolderName}</p>
-              )}
-            </div>
-
-            {/* Account Number */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Account Number</label>
-              {isEditingBank ? (
-                <input
-                  type="text"
-                  value={bankInfo.accountNumber}
-                  onChange={(e) => setBankInfo({ ...bankInfo, accountNumber: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-                  placeholder="Enter account number"
-                  maxLength={18}
-                />
-              ) : (
-                <p className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800 font-mono">
-                  {maskAccountNumber(bankInfo.accountNumber)}
-                </p>
-              )}
-            </div>
-
-            {/* IFSC Code */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">IFSC Code</label>
-              {isEditingBank ? (
-                <input
-                  type="text"
-                  value={bankInfo.ifscCode}
-                  onChange={(e) => setBankInfo({ ...bankInfo, ifscCode: e.target.value.toUpperCase() })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all uppercase"
-                  placeholder="Enter IFSC code"
-                  maxLength={11}
-                />
-              ) : (
-                <p className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800 font-mono">{bankInfo.ifscCode}</p>
-              )}
-            </div>
-
-            {/* Bank Branch */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Bank Branch</label>
-              {isEditingBank ? (
-                <input
-                  type="text"
-                  value={bankInfo.bankBranch}
-                  onChange={(e) => setBankInfo({ ...bankInfo, bankBranch: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-                  placeholder="Enter bank branch"
-                />
-              ) : (
-                <p className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800">{bankInfo.bankBranch}</p>
-              )}
-            </div>
-
-            {/* Folder Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Folder Name</label>
-              {isEditingBank ? (
-                <input
-                  type="text"
-                  value={bankInfo.folderName}
-                  onChange={(e) => setBankInfo({ ...bankInfo, folderName: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-                  placeholder="Enter folder name (optional)"
-                />
-              ) : (
-                <p className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800">{bankInfo.folderName || '—'}</p>
-              )}
-            </div>
+            <InputField
+              label="Bank Name"
+              value={bankInfo.bankName}
+              editable={isEditingBank}
+            />
+            <InputField
+              label="Account Holder Name"
+              value={bankInfo.accountHolderName}
+              editable={isEditingBank}
+            />
+            <InputField
+              label="Account Number"
+              value={bankInfo.accountNumber}
+              editable={isEditingBank}
+            />
+            <InputField
+              label="IFSC Code"
+              value={bankInfo.ifscCode}
+              editable={isEditingBank}
+            />
+            <InputField
+              label="Bank Branch"
+              value={bankInfo.bankBranch}
+              editable={isEditingBank}
+            />
+            <InputField
+              label="Folder Name"
+              value={bankInfo.folderName}
+              editable={isEditingBank}
+            />
           </div>
-
-          {isEditingBank && (
-            <div className="mt-6 flex space-x-3">
-              <button
-                onClick={handleSaveBankInfo}
-                className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl transition-colors font-medium shadow-sm"
-              >
-                Save Bank Details
-              </button>
-            </div>
-          )}
         </div>
       </div>
-
-      <style>{`
-        @keyframes slide-in {
-          from {
-            transform: translateX(100%);
-            opacity: 0;
-          }
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-        .animate-slide-in {
-          animation: slide-in 0.3s ease-out;
-        }
-      `}</style>
     </div>
   );
 };
 
-export default Profile;
+const InputField = ({ label, value, editable, icon }) => (
+  <div className="flex flex-col">
+    <label className="text-gray-600 mb-1">{label}</label>
+    <div className="flex items-center">
+      {icon && <span className="mr-2 text-gray-500">{icon}</span>}
+      <input
+        type="text"
+        value={value}
+        readOnly={!editable}
+        className={`w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-800 ${
+          editable ? "bg-white" : "bg-gray-100"
+        }`}
+      />
+    </div>
+  </div>
+);
+
+export default ProfilePage;
+
 
 
 
