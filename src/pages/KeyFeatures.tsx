@@ -1,13 +1,9 @@
 import React from "react";
-import Header from "../components/layout/Header";
-import Sidebar from "../components/layout/Sidebar";
 
 const KeyFeaturesPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
       <div className="flex pt-16">
-        <Sidebar />
         <div className="flex-1 p-8 ml-64">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-gray-800">
             <h1 className="text-4xl font-bold text-center text-blue-600 mb-8">Key Features</h1>

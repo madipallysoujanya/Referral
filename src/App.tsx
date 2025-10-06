@@ -1,39 +1,37 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import AdminLayout from './components/layout/AdminLayout';
-import Dashboard from './pages/Dashboard';
-import Technicians from './pages/Technicians';
-import Users from './pages/Users';
-import Earnings from './pages/Earnings';
-import Profile from './pages/Profile';
-import Franchise from './pages/Franchise';
-import AboutUs from './pages/AboutUs';
-import Categories from './pages/Categories';
-import KeyFeatures from './pages/KeyFeatures';
-import Subscriptions from './pages/Subscriptions';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import Header from './components/layout/Header';
+import AppRoutes from './routes/AppRoutes';
 
-function App() {
+const AppContent = () => {
+  const location = useLocation();
+  
+  // Define routes where header should be hidden
+  const hideHeaderRoutes = [
+    '/login/referral', 
+    '/signup/referral'
+  ];
+  
+  // Check if current route should hide header
+  const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {!shouldHideHeader && <Header />}
+      <main className={`px-4 sm:px-6 py-8 ${shouldHideHeader ? 'pt-0' : ''}`}>
+        <AppRoutes />
+      </main>
+      {/* {!shouldHideHeader && <Footer />} */}
+    </div>
+  );
+};
+
+const App = () => {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50">
-        <Routes>
-          <Route path="/" element={<AdminLayout />}>
-            <Route index element={<Navigate to="/dashboard" replace />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="technicians" element={<Technicians />} />
-            <Route path="franchise" element={<Franchise />} />
-            <Route path="users" element={<Users />} />
-            <Route path="earnings" element={<Earnings />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="about" element={<AboutUs />} />
-            <Route path="categories" element={<Categories />} />
-            <Route path="features" element={<KeyFeatures />} />
-            <Route path="subscription" element={<Subscriptions />} />
-          </Route>
-        </Routes>
-      </div>
+      <AppContent />
     </Router>
   );
-}
+};
 
 export default App;

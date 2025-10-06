@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { Check, X, Star, Crown, Zap, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/layout/Header';// Adjust the import path as needed
-import Sidebar from '../components/layout/Sidebar';
 
 const iconMap: { [key: string]: React.ComponentType<any> } = {
   Star,
@@ -138,9 +137,7 @@ const SubscriptionPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <Header />
-      <div className="flex pt-16">
-        <Sidebar />
+      <div className="flex">
         <div className="flex-1 p-8 ml-64">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12">
