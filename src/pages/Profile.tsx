@@ -47,7 +47,8 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 md:ml-64 p-4 md:p-8">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+      {/* Main Content - Centered properly like dashboard */}
       <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
         {/* ---------- Header ---------- */}
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
@@ -65,7 +66,7 @@ const ProfilePage = () => {
             </h3>
             <button
               onClick={() => setIsEditingPersonal(!isEditingPersonal)}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
             >
               <FaEdit /> {isEditingPersonal ? "Save" : "Edit"}
             </button>
@@ -124,20 +125,20 @@ const ProfilePage = () => {
           <p className="text-gray-600 mb-4">
             Share this code with your friends
           </p>
-          <div className="flex items-center justify-between bg-white border border-gray-300 rounded-lg px-4 py-3">
+          <div className="flex flex-col sm:flex-row items-center justify-between bg-white border border-gray-300 rounded-lg px-4 py-3 gap-4">
             <span className="font-semibold text-lg text-gray-800">
               {referralCode}
             </span>
             <div className="flex gap-3">
               <button
                 onClick={handleCopy}
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md"
+                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md transition-colors"
               >
                 <FaCopy /> {copied ? "Copied" : "Copy"}
               </button>
               <button
                 onClick={handleShare}
-                className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md"
+                className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md transition-colors"
               >
                 <FaShareAlt /> Share
               </button>
@@ -153,7 +154,7 @@ const ProfilePage = () => {
             </h3>
             <button
               onClick={() => setIsEditingBank(!isEditingBank)}
-              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
             >
               <FaEdit /> {isEditingBank ? "Save" : "Edit"}
             </button>
@@ -207,8 +208,8 @@ const InputField = ({ label, value, editable, icon }) => (
         value={value}
         readOnly={!editable}
         className={`w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-800 ${
-          editable ? "bg-white" : "bg-gray-100"
-        }`}
+          editable ? "bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500" : "bg-gray-100"
+        } transition-colors`}
       />
     </div>
   </div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Users, 
@@ -28,86 +27,119 @@ const Earnings: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 pl-64">
-      {/* Main Container */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+      {/* Main Container - Centered properly */}
+      <div className="max-w-7xl mx-auto">
+        
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-
-          {/* Total Revenue */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between">
-            {/* Heading placed above Total Revenue */}
-            <div className="text-center mb-4">
+          {/* Total Revenue Card with Heading */}
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 lg:col-span-4">
+            <div className="text-center mb-6">
               <h1 className="text-2xl font-bold text-gray-800 mb-2">Earnings Overview</h1>
-              <p className="text-gray-600 text-sm">Track revenue, commissions, and financial performance</p>
+              <p className="text-gray-600">Track revenue, commissions, and financial performance</p>
             </div>
-
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">Total Revenue</p>
-                <p className="text-3xl font-bold text-gray-900">₹0</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Total Revenue */}
+              <div className="bg-gray-50 rounded-xl p-4 flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-500 mb-1">Total Revenue</p>
+                  <p className="text-2xl font-bold text-gray-900">₹0</p>
+                </div>
+                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                  <DollarSign className="w-6 h-6 text-green-600" />
+                </div>
               </div>
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                <DollarSign className="w-6 h-6 text-green-600" />
+
+              {/* Monthly Earnings */}
+              <div className="bg-gray-50 rounded-xl p-4 flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-500 mb-1">Monthly Earnings</p>
+                  <p className="text-2xl font-bold text-gray-900">₹0</p>
+                </div>
+                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                  <TrendingUp className="w-6 h-6 text-blue-600" />
+                </div>
+              </div>
+
+              {/* Active Subscriptions */}
+              <div className="bg-gray-50 rounded-xl p-4 flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-500 mb-1">Active Subscriptions</p>
+                  <p className="text-2xl font-bold text-gray-900">0</p>
+                </div>
+                <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                  <Users className="w-6 h-6 text-purple-600" />
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Monthly Earnings */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-500 mb-1">Monthly Earnings</p>
-              <p className="text-3xl font-bold text-gray-900">₹0</p>
-            </div>
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-              <TrendingUp className="w-6 h-6 text-blue-600" />
-            </div>
-          </div>
-
-          {/* Earnings by Technicians */}
+          {/* Individual Stat Cards */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-500 mb-1">Earnings by Technicians</p>
-              <p className="text-3xl font-bold text-gray-900">₹0</p>
+              <p className="text-2xl font-bold text-gray-900">₹0</p>
             </div>
             <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
               <Users className="w-6 h-6 text-purple-600" />
             </div>
           </div>
 
-          {/* Earnings by Franchise */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-500 mb-1">Earnings by Franchise</p>
-              <p className="text-3xl font-bold text-gray-900">₹0</p>
+              <p className="text-2xl font-bold text-gray-900">₹0</p>
             </div>
             <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
               <Star className="w-6 h-6 text-orange-600" />
             </div>
           </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500 mb-1">Commission Earned</p>
+              <p className="text-2xl font-bold text-gray-900">₹0</p>
+            </div>
+            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+              <DollarSign className="w-6 h-6 text-green-600" />
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500 mb-1">Pending Payouts</p>
+              <p className="text-2xl font-bold text-gray-900">₹0</p>
+            </div>
+            <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+              <TrendingUp className="w-6 h-6 text-yellow-600" />
+            </div>
+          </div>
         </div>
 
         {/* Revenue Trends Chart */}
-        <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-          <div className="flex items-center justify-between mb-6">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
             <div className="flex items-center space-x-3">
               <TrendingUp className="w-6 h-6 text-blue-600" />
               <h3 className="text-xl font-semibold text-gray-800">Revenue Trends ({selectedYear})</h3>
             </div>
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">Technicians</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-teal-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">Franchise</span>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-6">
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                  <span className="text-sm text-gray-600">Technicians</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-teal-500 rounded-full"></div>
+                  <span className="text-sm text-gray-600">Franchise</span>
+                </div>
               </div>
               <select 
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(Number(e.target.value))}
-                className="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-sm"
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm transition-colors"
               >
                 <option value={2023}>2023</option>
                 <option value={2024}>2024</option>
@@ -121,18 +153,33 @@ const Earnings: React.FC = () => {
             <ResponsiveContainer width="100%" height={350}>
               <BarChart data={revenueData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="month" tick={{ fontSize: 12 }} axisLine={{ stroke: '#e0e0e0' }} />
-                <YAxis tick={{ fontSize: 12 }} axisLine={{ stroke: '#e0e0e0' }} />
+                <XAxis 
+                  dataKey="month" 
+                  tick={{ fontSize: 12 }} 
+                  axisLine={{ stroke: '#e0e0e0' }} 
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }} 
+                  axisLine={{ stroke: '#e0e0e0' }} 
+                />
                 <Tooltip 
                   contentStyle={{ 
                     backgroundColor: 'white',
-                    border: '1px solid #e0e0e0',
+                    border: '1px solid #e5e7eb',
                     borderRadius: '8px',
                     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
                   }}
                 />
-                <Bar dataKey="technicians" fill="#3B82F6" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="franchise" fill="#14B8A6" radius={[4, 4, 0, 0]} />
+                <Bar 
+                  dataKey="technicians" 
+                  fill="#3B82F6" 
+                  radius={[4, 4, 0, 0]} 
+                />
+                <Bar 
+                  dataKey="franchise" 
+                  fill="#14B8A6" 
+                  radius={[4, 4, 0, 0]} 
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>

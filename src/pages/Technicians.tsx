@@ -156,10 +156,11 @@ const Technicians: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 pl-64">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+      {/* Main Content - Centered properly */}
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-800 mb-2">
               Technician Management
@@ -205,7 +206,7 @@ const Technicians: React.FC = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="Enter technician name"
                   />
                 </div>
@@ -219,7 +220,7 @@ const Technicians: React.FC = () => {
                     value={formData.category}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   >
                     <option value="">Select category</option>
                     {categories.map((cat) => (
@@ -241,7 +242,7 @@ const Technicians: React.FC = () => {
                     onChange={handleInputChange}
                     required
                     maxLength={10}
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="Enter 10-digit phone number"
                   />
                 </div>
@@ -257,7 +258,7 @@ const Technicians: React.FC = () => {
                     onChange={handleInputChange}
                     required
                     minLength={6}
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="Enter password"
                   />
                 </div>
@@ -272,7 +273,7 @@ const Technicians: React.FC = () => {
                     value={formData.buildingName}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="Enter building name"
                   />
                 </div>
@@ -286,7 +287,7 @@ const Technicians: React.FC = () => {
                     name="pincode"
                     value={formData.pincode}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="Enter pincode"
                   />
                 </div>
@@ -301,7 +302,7 @@ const Technicians: React.FC = () => {
                     value={formData.area}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="Enter area"
                   />
                 </div>
@@ -316,7 +317,7 @@ const Technicians: React.FC = () => {
                     value={formData.city}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="Enter city"
                   />
                 </div>
@@ -331,7 +332,7 @@ const Technicians: React.FC = () => {
                     value={formData.state}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="Enter state"
                   />
                 </div>
@@ -345,7 +346,7 @@ const Technicians: React.FC = () => {
                     value={formData.subscriptionPlan}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   >
                     <option value="">Select plan</option>
                     {subscriptionPlans.map((plan) => (
@@ -360,13 +361,13 @@ const Technicians: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setShowAddForm(false)}
-                    className="px-6 py-3 bg-gray-200 rounded-xl"
+                    className="px-6 py-3 bg-gray-200 hover:bg-gray-300 rounded-xl transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-blue-600 text-white rounded-xl"
+                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors"
                   >
                     Add Technician
                   </button>
@@ -377,7 +378,7 @@ const Technicians: React.FC = () => {
         )}
 
         {/* Search & Filter */}
-        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-8 max-w-4xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-8">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
             <div className="relative flex-1 max-w-md">
               <Search
@@ -389,14 +390,14 @@ const Technicians: React.FC = () => {
                 placeholder="Search by name or phone number..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               />
             </div>
             <div className="flex items-center space-x-3">
               <select
                 value={selectedPlan}
                 onChange={(e) => setSelectedPlan(e.target.value)}
-                className="px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 bg-white"
+                className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-colors"
               >
                 <option value="All Plans">All Plans</option>
                 <option value="Economy Plan">Economy Plan</option>
@@ -412,41 +413,39 @@ const Technicians: React.FC = () => {
         </div>
 
         {/* Table */}
-        <div className="bg-white rounded-2xl shadow-sm border overflow-hidden max-w-6xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b">
+              <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
                     Name
                   </th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
                     Contact
                   </th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
                     Category
                   </th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
                     Location
                   </th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
                     Plan
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y">
+              <tbody className="divide-y divide-gray-200">
                 {filteredTechnicians.length > 0 ? (
                   filteredTechnicians.map((tech) => (
-                    <tr key={tech.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 text-center">{tech.name}</td>
-                      <td className="px-6 py-4 text-center">
-                        {tech.phoneNumber}
-                      </td>
-                      <td className="px-6 py-4 text-center">{tech.category}</td>
-                      <td className="px-6 py-4 text-center">
+                    <tr key={tech.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 text-sm text-gray-900">{tech.name}</td>
+                      <td className="px-6 py-4 text-sm text-gray-600">{tech.phoneNumber}</td>
+                      <td className="px-6 py-4 text-sm text-gray-600">{tech.category}</td>
+                      <td className="px-6 py-4 text-sm text-gray-600">
                         {tech.city}, {tech.state}
                       </td>
-                      <td className="px-6 py-4 text-center">
+                      <td className="px-6 py-4">
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                           {tech.subscriptionPlan}
                         </span>
