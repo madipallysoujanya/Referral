@@ -23,50 +23,66 @@ const Dashboard: React.FC = () => {
   };
 
   const technicianEarnings = [
-    { month: "Jan", earnings: 0 },
-    { month: "Feb", earnings: 0 },
-    { month: "Mar", earnings: 0 },
-    { month: "Apr", earnings: 0 },
-    { month: "May", earnings: 0 },
-    { month: "Jun", earnings: 0 },
-    { month: "Jul", earnings: 0 },
-    { month: "Aug", earnings: 0 },
-    { month: "Sep", earnings: 0 },
-    { month: "Oct", earnings: 0 },
-    { month: "Nov", earnings: 0 },
-    { month: "Dec", earnings: 0 },
+    { month: "Jan", earnings: 12500 },
+    { month: "Feb", earnings: 18900 },
+    { month: "Mar", earnings: 14200 },
+    { month: "Apr", earnings: 21000 },
+    { month: "May", earnings: 18500 },
+    { month: "Jun", earnings: 23400 },
+    { month: "Jul", earnings: 19800 },
+    { month: "Aug", earnings: 26700 },
+    { month: "Sep", earnings: 22300 },
+    { month: "Oct", earnings: 28900 },
+    { month: "Nov", earnings: 25600 },
+    { month: "Dec", earnings: 31200 },
+  ];
+
+  const recentEarnings = [
+    { id: 1, name: "John Smith", service: "AC Repair", amount: 2500, date: "2024-01-15", status: "Completed" },
+    { id: 2, name: "Mike Johnson", service: "Refrigerator Service", amount: 1800, date: "2024-01-14", status: "Completed" },
+    { id: 3, name: "Sarah Wilson", service: "Washing Machine Repair", amount: 3200, date: "2024-01-14", status: "Completed" },
+    { id: 4, name: "David Brown", service: "Microwave Repair", amount: 1200, date: "2024-01-13", status: "Completed" },
+    { id: 5, name: "Emily Davis", service: "TV Installation", amount: 2800, date: "2024-01-12", status: "Completed" },
   ];
 
   const statsCards = [
     { 
       title: "Total Technicians", 
-      value: "0", 
+      value: "12", 
       icon: <Users className="w-6 h-6" />, 
       bgColor: "bg-blue-100",
       iconColor: "text-blue-600"
     },
     { 
       title: "Total Subscriptions", 
-      value: "0", 
+      value: "8", 
       icon: <CreditCard className="w-6 h-6" />, 
       bgColor: "bg-green-100",
       iconColor: "text-green-600"
     },
     { 
       title: "Total Earnings", 
-      value: "₹0", 
+      value: "₹2,43,000", 
       icon: <DollarSign className="w-6 h-6" />, 
       bgColor: "bg-yellow-100",
       iconColor: "text-yellow-600"
     },
     { 
       title: "Monthly Earnings", 
-      value: "₹0", 
+      value: "₹31,200", 
       icon: <DollarSign className="w-6 h-6" />, 
       bgColor: "bg-orange-100",
       iconColor: "text-orange-600"
     },
   ];
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -145,6 +161,7 @@ const Dashboard: React.FC = () => {
                     border: 'none',
                     boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
                   }}
+                  formatter={(value) => [formatCurrency(Number(value)), 'Earnings']}
                 />
                 <Bar 
                   dataKey="earnings" 
@@ -173,12 +190,25 @@ const Dashboard: React.FC = () => {
                 </button>
               </div>
             </div>
-            <div className="text-center py-12">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <DollarSign className="w-8 h-8 text-gray-400" />
-              </div>
-              <p className="text-gray-500 font-medium">No recent earnings found</p>
-              <p className="text-gray-400 text-sm mt-1">Your earnings will appear here</p>
+            
+            <div className="space-y-4">
+              {recentEarnings.map((earning) => (
+                <div key={earning.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                      <DollarSign className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900">{earning.name}</p>
+                      <p className="text-sm text-gray-500">{earning.service}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold text-gray-900">{formatCurrency(earning.amount)}</p>
+                    <p className="text-sm text-gray-500">{earning.date}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

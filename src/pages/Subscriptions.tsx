@@ -1,9 +1,7 @@
-
-
 import React, { useEffect, useState } from 'react';
 import { Check, X, Star, Crown, Zap, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/layout/Header';// Adjust the import path as needed
+import Header from '../components/layout/Header';
 
 const iconMap: { [key: string]: React.ComponentType<any> } = {
   Star,
@@ -227,6 +225,15 @@ const SubscriptionPage: React.FC = () => {
 };
 
 export default SubscriptionPage;
+
+
+
+
+
+
+
+
+
 // import React, { useEffect, useState } from 'react';
 // import { Check, X, Star, Crown, Zap, Shield } from 'lucide-react';
 // import { useNavigate } from 'react-router-dom';
